@@ -10,6 +10,8 @@ const initialForm = {
   whatsapp_phone: '',
 };
 
+const apiUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
+
 const pastEventPhotos = [
   ['/past-events/event%201.png', 'LAST MINUTE C', 'Students gathering for KICKOFF'],
   ['/past-events/event%202.png', 'WEB3', 'Teams building under pressure'],
@@ -56,7 +58,7 @@ function App() {
     setStatus({ type: '', message: '' });
 
     try {
-      await axios.post('http://127.0.0.1:8000/registrations', form);
+      await axios.post(`${apiUrl}/registrations`, form);
       setForm(initialForm);
       setStatus({
         type: 'success',
