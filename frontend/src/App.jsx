@@ -168,7 +168,7 @@ function App() {
           </div>
           <label>
             Year of study
-            <select name="study_year" value={form.study_year} onChange={handleChange} required>
+            <select name="Year" value={form.study_year} onChange={handleChange} required>
               <option value="" disabled>Select your year</option>
               <option value="1st Year">1st Year</option>
               <option value="2nd Year">2nd Year</option>
