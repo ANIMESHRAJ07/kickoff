@@ -58,7 +58,11 @@ function App() {
     setStatus({ type: '', message: '' });
 
     try {
-      await axios.post(`${apiUrl}/registrations`, form);
+      const payload = {
+        ...form,
+        whatsapp_phone: form.whatsapp_same ? null : form.whatsapp_phone || null,
+      };
+      await axios.post(`${apiUrl}/registrations`, payload);
       setForm(initialForm);
       setStatus({
         type: 'success',

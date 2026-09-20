@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 
 class RegistrationCreate(BaseModel):
@@ -10,6 +10,11 @@ class RegistrationCreate(BaseModel):
     branch: str = Field(min_length=2, max_length=160)
     whatsapp_same: bool = True
     whatsapp_phone: str | None = Field(default=None, min_length=7, max_length=30)
+
+    @field_validator("whatsapp_phone", mode="before")
+    @classmethod
+    def blank_whatsapp_is_none(cls, value):
+        return None if value == "" else value
 
     @model_validator(mode="after")
     def validate_whatsapp(self):
