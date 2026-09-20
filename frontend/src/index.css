@@ -207,7 +207,8 @@ label {
   letter-spacing: 0.04em;
 }
 
-input {
+input,
+select {
   width: 100%;
   border: 1px solid rgba(124, 174, 255, 0.48);
   border-radius: 0;
@@ -217,7 +218,12 @@ input {
   font: 1rem Georgia, 'Times New Roman', serif;
 }
 
-input:focus {
+select {
+  color-scheme: dark;
+}
+
+input:focus,
+select:focus {
   outline: 2px solid #16dcff;
   outline-offset: 2px;
 }

@@ -11,6 +11,7 @@ def send_registration_confirmation(
     sap_id: str,
     branch: str,
     phone: str,
+    study_year: str,
 ) -> bool:
     smtp_host = os.getenv("SMTP_HOST")
     smtp_port = int(os.getenv("SMTP_PORT", "587"))
@@ -40,6 +41,7 @@ def send_registration_confirmation(
         f"Branch: {branch}\n"
         f"SAP ID: {sap_id}\n"
         f"Phone: {phone}\n"
+        f"Year: {study_year}\n"
         f"Contact number: {phone}\n\n"
         "WHAT TO EXPECT\n"
         "- Talk to seniors and mentors\n"
@@ -75,6 +77,7 @@ def send_registration_confirmation(
           <p style="margin:7px 0;color:#f4f2ff;"><strong style="color:#16dcff;">BRANCH</strong>&nbsp; {branch}</p>
           <p style="margin:7px 0;color:#f4f2ff;"><strong style="color:#16dcff;">SAP ID</strong>&nbsp; {sap_id}</p>
           <p style="margin:7px 0;color:#f4f2ff;"><strong style="color:#16dcff;">PHONE</strong>&nbsp;&nbsp; {phone}</p>
+          <p style="margin:7px 0;color:#f4f2ff;"><strong style="color:#16dcff;">YEAR</strong>&nbsp;&nbsp; {study_year}</p>
           <p style="margin:7px 0;color:#f4f2ff;"><strong style="color:#16dcff;">CONTACT</strong>&nbsp; {phone}</p>
         </div>
         <p style="margin:26px 0 8px;color:#ff25d8;font-size:13px;letter-spacing:2px;">WHAT TO EXPECT</p>

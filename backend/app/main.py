@@ -45,6 +45,9 @@ def create_tables():
         elif "branch" not in existing_columns:
             connection.execute(text("ALTER TABLE registrations ADD COLUMN branch VARCHAR(160) NOT NULL DEFAULT ''"))
         current_columns = {column["name"] for column in inspect(engine).get_columns("registrations")}
+        if "study_year" not in current_columns:
+            connection.execute(text("ALTER TABLE registrations ADD COLUMN study_year VARCHAR(20) NOT NULL DEFAULT '1st Year'"))
+        current_columns = {column["name"] for column in inspect(engine).get_columns("registrations")}
         if "whatsapp_same" in current_columns:
             connection.execute(text("ALTER TABLE registrations DROP COLUMN whatsapp_same"))
         current_columns = {column["name"] for column in inspect(engine).get_columns("registrations")}
@@ -118,5 +121,6 @@ def create_registration(
         new_registration.sap_id,
         new_registration.branch,
         new_registration.phone,
+        new_registration.study_year,
     )
     return new_registration

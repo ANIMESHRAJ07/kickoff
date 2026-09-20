@@ -6,6 +6,7 @@ const initialForm = {
   sap_id: '',
   phone: '',
   branch: '',
+  study_year: '',
 };
 
 const apiUrl = (import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000').replace(/\/+$/, '');
@@ -165,6 +166,15 @@ function App() {
               <input name="branch" value={form.branch} onChange={handleChange} required minLength="2" maxLength="160" placeholder="Computer Science" />
             </label>
           </div>
+          <label>
+            Year of study
+            <select name="study_year" value={form.study_year} onChange={handleChange} required>
+              <option value="" disabled>Select your year</option>
+              <option value="1st Year">1st Year</option>
+              <option value="2nd Year">2nd Year</option>
+              <option value="3rd Year">3rd Year</option>
+            </select>
+          </label>
           <button className="primary-btn" type="submit" disabled={isSubmitting}>
             {isSubmitting ? 'Submitting...' : 'Complete registration'}
             <span aria-hidden="true">-&gt;</span>

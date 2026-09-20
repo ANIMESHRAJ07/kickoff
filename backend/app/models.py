@@ -14,6 +14,7 @@ class Registration(Base):
     sap_id: Mapped[str] = mapped_column(String(40), unique=True, index=True, nullable=False)
     phone: Mapped[str] = mapped_column(String(30), nullable=False)
     branch: Mapped[str] = mapped_column(String(160), nullable=False, default="")
+    study_year: Mapped[str] = mapped_column(String(20), nullable=False, default="1st Year")
     created_at: Mapped[datetime] = mapped_column(
         DateTime, server_default=func.now(), nullable=False
     )
