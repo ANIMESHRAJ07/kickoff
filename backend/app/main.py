@@ -44,10 +44,12 @@ def create_tables():
             connection.execute(text("ALTER TABLE registrations CHANGE COLUMN college branch VARCHAR(160) NOT NULL"))
         elif "branch" not in existing_columns:
             connection.execute(text("ALTER TABLE registrations ADD COLUMN branch VARCHAR(160) NOT NULL DEFAULT ''"))
-        if "whatsapp_same" not in existing_columns:
-            connection.execute(text("ALTER TABLE registrations ADD COLUMN whatsapp_same BOOLEAN NOT NULL DEFAULT TRUE"))
-        if "whatsapp_phone" not in existing_columns:
-            connection.execute(text("ALTER TABLE registrations ADD COLUMN whatsapp_phone VARCHAR(30) NULL"))
+        current_columns = {column["name"] for column in inspect(engine).get_columns("registrations")}
+        if "whatsapp_same" in current_columns:
+            connection.execute(text("ALTER TABLE registrations DROP COLUMN whatsapp_same"))
+        current_columns = {column["name"] for column in inspect(engine).get_columns("registrations")}
+        if "whatsapp_phone" in current_columns:
+            connection.execute(text("ALTER TABLE registrations DROP COLUMN whatsapp_phone"))
         connection.execute(text("UPDATE registrations SET sap_id = CONCAT('LEGACY-', id) WHERE sap_id = '' OR sap_id IS NULL"))
         index_names = {index["name"] for index in inspect(engine).get_indexes("registrations")}
         if "ix_registrations_sap_id" not in index_names:
