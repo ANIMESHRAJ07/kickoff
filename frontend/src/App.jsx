@@ -6,8 +6,6 @@ const initialForm = {
   sap_id: '',
   phone: '',
   branch: '',
-  whatsapp_same: true,
-  whatsapp_phone: '',
 };
 
 const apiUrl = (import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000').replace(/\/+$/, '');
@@ -44,25 +42,13 @@ function App() {
     setForm((currentForm) => ({ ...currentForm, [name]: value }));
   }
 
-  function handleWhatsappChoice(isSame) {
-    setForm((currentForm) => ({
-      ...currentForm,
-      whatsapp_same: isSame,
-      whatsapp_phone: isSame ? '' : currentForm.whatsapp_phone,
-    }));
-  }
-
   async function handleSubmit(event) {
     event.preventDefault();
     setIsSubmitting(true);
     setStatus({ type: '', message: '' });
 
     try {
-      const payload = {
-        ...form,
-        whatsapp_phone: form.whatsapp_same ? null : form.whatsapp_phone || null,
-      };
-      await axios.post(`${apiUrl}/registrations`, payload);
+      await axios.post(`${apiUrl}/registrations`, form);
       setForm(initialForm);
       setStatus({
         type: 'success',
@@ -179,19 +165,6 @@ function App() {
               <input name="branch" value={form.branch} onChange={handleChange} required minLength="2" maxLength="160" placeholder="Computer Science" />
             </label>
           </div>
-          <fieldset className="whatsapp-choice">
-            <legend>Is this your WhatsApp number?</legend>
-            <div className="choice-options">
-              <button className={form.whatsapp_same ? 'choice active' : 'choice'} type="button" onClick={() => handleWhatsappChoice(true)} aria-pressed={form.whatsapp_same}>Yes, same number</button>
-              <button className={!form.whatsapp_same ? 'choice active' : 'choice'} type="button" onClick={() => handleWhatsappChoice(false)} aria-pressed={!form.whatsapp_same}>No, different number</button>
-            </div>
-          </fieldset>
-          {!form.whatsapp_same && (
-            <label>
-              WhatsApp number
-              <input name="whatsapp_phone" type="tel" value={form.whatsapp_phone} onChange={handleChange} required minLength="7" maxLength="30" placeholder="Your WhatsApp number" />
-            </label>
-          )}
           <button className="primary-btn" type="submit" disabled={isSubmitting}>
             {isSubmitting ? 'Submitting...' : 'Complete registration'}
             <span aria-hidden="true">-&gt;</span>

@@ -116,7 +116,5 @@ def create_registration(
         new_registration.sap_id,
         new_registration.branch,
         new_registration.phone,
-        new_registration.whatsapp_same,
-        new_registration.whatsapp_phone,
     )
     return new_registration

@@ -7,19 +7,19 @@ logger = logging.getLogger(__name__)
 
 
 def send_registration_confirmation(
-  full_name: str,
-  recipient: str,
-  sap_id: str,
-  branch: str,
-  phone: str,
-  whatsapp_same: bool,
-  whatsapp_phone: str | None,
+    full_name: str,
+    sap_id: str,
+    branch: str,
+    phone: str,
 ) -> bool:
     smtp_host = os.getenv("SMTP_HOST")
     smtp_port = int(os.getenv("SMTP_PORT", "587"))
     smtp_username = os.getenv("SMTP_USERNAME")
     smtp_password = os.getenv("SMTP_PASSWORD")
     sender_email = os.getenv("SMTP_FROM_EMAIL")
+
+    email_domain = os.getenv("COLLEGE_EMAIL_DOMAIN", "dit.edu.in")
+    recipient = f"{sap_id}@{email_domain}"
 
     if not all((smtp_host, smtp_username, smtp_password, sender_email)):
         logger.warning("Confirmation email skipped because SMTP is not fully configured")
@@ -40,7 +40,7 @@ def send_registration_confirmation(
         f"Branch: {branch}\n"
         f"SAP ID: {sap_id}\n"
         f"Phone: {phone}\n"
-        f"WhatsApp: {phone if whatsapp_same else whatsapp_phone}\n\n"
+        f"Contact number: {phone}\n\n"
         "WHAT TO EXPECT\n"
         "- Talk to seniors and mentors\n"
         "- Scribble, create, and have fun\n"
@@ -75,7 +75,7 @@ def send_registration_confirmation(
           <p style="margin:7px 0;color:#f4f2ff;"><strong style="color:#16dcff;">BRANCH</strong>&nbsp; {branch}</p>
           <p style="margin:7px 0;color:#f4f2ff;"><strong style="color:#16dcff;">SAP ID</strong>&nbsp; {sap_id}</p>
           <p style="margin:7px 0;color:#f4f2ff;"><strong style="color:#16dcff;">PHONE</strong>&nbsp;&nbsp; {phone}</p>
-          <p style="margin:7px 0;color:#f4f2ff;"><strong style="color:#16dcff;">WHATSAPP</strong>&nbsp; {phone if whatsapp_same else whatsapp_phone}</p>
+          <p style="margin:7px 0;color:#f4f2ff;"><strong style="color:#16dcff;">CONTACT</strong>&nbsp; {phone}</p>
         </div>
         <p style="margin:26px 0 8px;color:#ff25d8;font-size:13px;letter-spacing:2px;">WHAT TO EXPECT</p>
         <p style="margin:0;color:#d8d7ef;line-height:1.8;">Talk to seniors and mentors<br>Scribble, create, and have fun<br>Share, learn, and explore<br>Meet new people and discover CodeGenX</p>
